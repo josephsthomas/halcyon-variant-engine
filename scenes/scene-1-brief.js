@@ -14,7 +14,7 @@ export function renderScene1(host, ctx) {
           <div class="surface__main">
             ${subnavHTML(['Briefs', 'Spring ’26 — Quiet Strength'])}
             <div class="surface__title">New Campaign Brief</div>
-            <div class="surface__subtitle">Brief intake routes to the Halcyon Variant Engine when submitted.</div>
+            <div class="surface__subtitle">Submitted briefs go to the Halcyon Variant Engine.</div>
             <div class="surface__body">
               <form class="gs-form" id="brief-form" onsubmit="return false">
                 ${BRIEF_FORM.fields.map((f, i) => `

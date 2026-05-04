@@ -30,7 +30,7 @@ export function renderAct1(host, opts) {
       ${STAGES.map(stageHTML).join('')}
     </div>
 
-    <div class="a1-section-eyebrow">THE CANONICAL BRIDGE — HOW THE ENGINE TOUCHES ASSETHUB</div>
+    <div class="a1-section-eyebrow">THE CANONICAL BRIDGE · HOW THE ENGINE TOUCHES ASSETHUB</div>
     <div class="bridge bridge--narrated" id="a1-bridge">
       ${bridgeSVG()}
       <div class="bridge__caption">${escapeHtml(HEADLINE.bridgeCaption)}</div>
@@ -43,7 +43,7 @@ export function renderAct1(host, opts) {
 
     <div class="a1-cta-row">
       <button class="btn-primary" id="a1-begin">${escapeHtml(HEADLINE.beginButton)}</button>
-      <div class="a1-cta-foot">A 7-scene visual walkthrough · ~2 minutes</div>
+      <div class="a1-cta-foot">7 scenes · about 2 minutes</div>
     </div>
   `;
 
@@ -99,70 +99,69 @@ function shortPrimitive(s) {
 }
 
 function bridgeSVG() {
-  // Narrated bridge: Brief flows in (left), AssetHub (left box) is read,
-  // Engine resolves 188 tasks, Firefly executes (right top), results write
-  // back to AssetHub. All arrows annotated.
+  // Bridge diagram. Layout is a 4-column flow with generous vertical spacing
+  // so arrow labels sit in their own bands and never cross node text.
+  // Columns:  Brief (col 1) → Engine (col 2) → AssetHub (col 3 top) + Firefly (col 3 bottom) → Channels (col 4)
   return `
-    <svg class="bridge__svg" viewBox="0 0 920 320" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+    <svg class="bridge__svg" viewBox="0 0 1000 380" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
       <defs>
         <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-          <path d="M0,0 L10,5 L0,10 z" fill="#5C7A72"/>
+          <path d="M0,0 L10,5 L0,10 z" fill="#4F6B62"/>
         </marker>
         <marker id="arr-gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
           <path d="M0,0 L10,5 L0,10 z" fill="#B89968"/>
         </marker>
       </defs>
 
-      <!-- Brief in -->
-      <g transform="translate(20,140)">
-        <rect x="0" y="0" width="120" height="48" rx="2" fill="#FCFAF4" stroke="#C8C0AE"/>
-        <text x="60" y="22" text-anchor="middle" font-family="EB Garamond,serif" font-style="italic" font-size="13" fill="#1F3A34">Brief</text>
-        <text x="60" y="38" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1.2" fill="#8FA39B">FROM CMO</text>
+      <!-- Brief (left) -->
+      <g transform="translate(20,160)">
+        <rect x="0" y="0" width="140" height="64" rx="2" fill="#FCFAF4" stroke="#C8C0AE"/>
+        <text x="70" y="28" text-anchor="middle" font-family="EB Garamond,serif" font-style="italic" font-size="15" fill="#1F3A34">Brief</text>
+        <text x="70" y="48" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1.2" fill="#6E867D">FROM CMO</text>
       </g>
 
-      <!-- Brief → Engine arrow -->
-      <line x1="140" y1="164" x2="280" y2="164" stroke="#5C7A72" stroke-width="1" marker-end="url(#arr)"/>
-      <text x="210" y="156" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1" fill="#5C7A72">FILE</text>
+      <!-- Brief → Engine: label sits ABOVE the arrow line, well clear -->
+      <text x="220" y="178" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1" fill="#4F6B62">FILE BRIEF</text>
+      <line x1="160" y1="192" x2="280" y2="192" stroke="#4F6B62" stroke-width="1" marker-end="url(#arr)"/>
 
-      <!-- Engine (center, dominant) -->
-      <g transform="translate(280,80)">
-        <rect x="0" y="0" width="360" height="160" fill="#FCFAF4" stroke="#1F3A34" stroke-width="1.5"/>
-        <text x="180" y="34" text-anchor="middle" font-family="EB Garamond,serif" font-style="italic" font-size="18" fill="#1F3A34">The Variant Engine</text>
-        <text x="180" y="52" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1.5" fill="#8FA39B">STATELESS · ORCHESTRATION ONLY</text>
-        <line x1="20" y1="68" x2="340" y2="68" stroke="#DDD4BE"/>
-        <text x="40" y="92"  font-family="Manrope,sans-serif" font-weight="500" font-size="11" fill="#1F3A34">·  Resolve 188 tasks from spec library</text>
-        <text x="40" y="112" font-family="Manrope,sans-serif" font-weight="500" font-size="11" fill="#1F3A34">·  Fan out to Firefly primitives in parallel</text>
-        <text x="40" y="132" font-family="Manrope,sans-serif" font-weight="500" font-size="11" fill="#1F3A34">·  Brand-check, C2PA-stamp, write back</text>
+      <!-- Engine (center) -->
+      <g transform="translate(280,100)">
+        <rect x="0" y="0" width="380" height="184" fill="#FCFAF4" stroke="#1F3A34" stroke-width="1.5"/>
+        <text x="190" y="36" text-anchor="middle" font-family="EB Garamond,serif" font-style="italic" font-size="20" fill="#1F3A34">The Variant Engine</text>
+        <text x="190" y="56" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1.5" fill="#6E867D">STATELESS  ·  ORCHESTRATION ONLY</text>
+        <line x1="24" y1="74" x2="356" y2="74" stroke="#DDD4BE"/>
+        <text x="40" y="100" font-family="Manrope,sans-serif" font-weight="500" font-size="11.5" fill="#1F3A34">·  Resolve 188 tasks from the spec library</text>
+        <text x="40" y="124" font-family="Manrope,sans-serif" font-weight="500" font-size="11.5" fill="#1F3A34">·  Fan out to Firefly primitives in parallel</text>
+        <text x="40" y="148" font-family="Manrope,sans-serif" font-weight="500" font-size="11.5" fill="#1F3A34">·  Score, stamp with C2PA, write back</text>
       </g>
 
-      <!-- AssetHub (top right) -->
-      <g transform="translate(700,32)">
-        <rect x="0" y="0" width="200" height="80" fill="#F5EFE3" stroke="#C8C0AE" stroke-width="1"/>
-        <text x="100" y="28" text-anchor="middle" font-family="EB Garamond,serif" font-style="italic" font-size="14" fill="#1F3A34">AssetHub</text>
-        <text x="100" y="46" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1.2" fill="#8FA39B">CANONICAL · OPENTEXT · 4.2 PB</text>
-        <text x="100" y="66" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1.2" fill="#8FA39B">SYSTEM OF RECORD · UNCHANGED</text>
+      <!-- AssetHub (top right, far enough above to keep arrow labels readable) -->
+      <g transform="translate(740,40)">
+        <rect x="0" y="0" width="240" height="84" fill="#F5EFE3" stroke="#C8C0AE" stroke-width="1"/>
+        <text x="120" y="30" text-anchor="middle" font-family="EB Garamond,serif" font-style="italic" font-size="15" fill="#1F3A34">AssetHub</text>
+        <text x="120" y="50" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1.2" fill="#6E867D">CANONICAL  ·  OPENTEXT  ·  4.2 PB</text>
+        <text x="120" y="68" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1.2" fill="#6E867D">SYSTEM OF RECORD  ·  UNCHANGED</text>
       </g>
-      <!-- Engine ↔ AssetHub: read up, write up -->
-      <line x1="560" y1="80" x2="780" y2="112" stroke="#5C7A72" stroke-width="1" marker-end="url(#arr)"/>
-      <text x="650" y="86" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1" fill="#5C7A72">READ HERO</text>
-      <line x1="780" y1="112" x2="600" y2="80" stroke="#5C7A72" stroke-width="1" marker-end="url(#arr)" stroke-dasharray="3 3"/>
-      <text x="660" y="106" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1" fill="#5C7A72">WRITE 188 BACK</text>
+      <!-- Engine → AssetHub: read up. Solid arrow, label sits to the LEFT of the arrow -->
+      <line x1="660" y1="140" x2="740" y2="100" stroke="#4F6B62" stroke-width="1" marker-end="url(#arr)"/>
+      <text x="668" y="116" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1" fill="#4F6B62">READ HERO</text>
+      <!-- AssetHub → Engine: write back. Dashed return arrow with label below it -->
+      <line x1="740" y1="124" x2="660" y2="160" stroke="#4F6B62" stroke-width="1" marker-end="url(#arr)" stroke-dasharray="3 3"/>
+      <text x="668" y="172" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1" fill="#4F6B62">WRITE 188 BACK</text>
 
       <!-- Firefly (bottom right) -->
-      <g transform="translate(700,208)">
-        <rect x="0" y="0" width="200" height="80" fill="#F5EFE3" stroke="#C8C0AE" stroke-width="1"/>
-        <text x="100" y="28" text-anchor="middle" font-family="EB Garamond,serif" font-style="italic" font-size="14" fill="#1F3A34">Firefly Services</text>
-        <text x="100" y="46" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1.2" fill="#8FA39B">CUSTOM MODELS · REFRAME v2</text>
-        <text x="100" y="66" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1.2" fill="#8FA39B">OBJECT COMPOSITE · TRANSLATE</text>
+      <g transform="translate(740,256)">
+        <rect x="0" y="0" width="240" height="84" fill="#F5EFE3" stroke="#C8C0AE" stroke-width="1"/>
+        <text x="120" y="30" text-anchor="middle" font-family="EB Garamond,serif" font-style="italic" font-size="15" fill="#1F3A34">Firefly Services</text>
+        <text x="120" y="50" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1.2" fill="#6E867D">CUSTOM MODELS  ·  REFRAME v2</text>
+        <text x="120" y="68" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1.2" fill="#6E867D">OBJECT COMPOSITE  ·  TRANSLATE</text>
       </g>
-      <!-- Engine → Firefly -->
-      <line x1="640" y1="200" x2="780" y2="208" stroke="#B89968" stroke-width="1" marker-end="url(#arr-gold)"/>
-      <text x="700" y="214" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1" fill="#B89968">188 PARALLEL JOBS</text>
+      <!-- Engine → Firefly: gold, label below -->
+      <line x1="660" y1="244" x2="740" y2="280" stroke="#B89968" stroke-width="1" marker-end="url(#arr-gold)"/>
+      <text x="668" y="276" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1" fill="#B89968">188 PARALLEL JOBS</text>
 
-      <!-- Activate (far right top) -->
-      <g transform="translate(560,280)">
-        <text x="40" y="14" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1.2" fill="#8FA39B">→ META · GOOGLE · AMAZON · OOH · IN-STORE</text>
-      </g>
+      <!-- Activation outputs -->
+      <text x="500" y="370" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1.2" fill="#6E867D">→  META  ·  GOOGLE  ·  AMAZON  ·  PINTEREST  ·  TIKTOK  ·  OOH  ·  IN-STORE</text>
     </svg>
   `;
 }
