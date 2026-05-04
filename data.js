@@ -17,6 +17,90 @@ export const HEADLINE = {
   bodyOrientLong: 'A thin orchestration layer between AssetHub — Halcyon’s 4.2-petabyte OpenText DAM — and Adobe Firefly Services. A marketing director files one brief. The Engine reads the canonical hero from AssetHub, resolves the brand-standards, surface-spec, and locale-rules JSON into 188 generation tasks, fans them out across Firefly primitives in parallel, scores every output against the brand-compliance threshold, stamps approved variants with C2PA provenance, writes them back to AssetHub as child assets with full lineage, and pushes them to retail, social, OOH, and e-commerce endpoints. Brief at nine. Live at one.',
 };
 
+// P11 — Act 0 (pre-page) content. Challenge synthesized from the FDE case-study
+// prompt; solution synthesized from the four source MD files.
+export const ACT0 = {
+  eyebrow: 'ADOBE FIREFLY · FORWARD DEPLOYED ENGINEERING · CASE STUDY',
+  title: 'From Pilot to Transformation',
+  subtitle: 'A Fortune-100 lifestyle brand’s 6-month path from one successful Firefly pilot to enterprise-scale creative production across 52 brands and 20 markets.',
+
+  challenge: {
+    eyebrow: 'THE CHALLENGE',
+    headline: 'A pilot worked. The scale-out doesn’t fit any existing product.',
+    body: 'Six months ago Halcyon ran a Firefly Services pilot on one brand in one market — Apparel-Green in North America. The pilot cut brief-to-post cycle time by 60% and lifted brand-compliance scores from 78 to 94. The CMO has now asked for transformation across 52 sub-brands and 20 markets. Discovery surfaced where the pilot’s success doesn’t generalize: hero imagery is fast, but the long tail — 500+ localized e-commerce, OOH, and retail variants per campaign, an estimated 18 million variants per year — remains a manual, $340M/year process. Standard Adobe products do not have a one-click localization-and-spec-compliance engine that connects to a 4.2-petabyte legacy OpenText DAM that two prior replacement attempts (2018, 2022) failed to migrate.',
+    pillars: [
+      { tag: 'SCALE',     line: '52 sub-brands × 20 markets × 500+ surface specs per campaign' },
+      { tag: 'VOLUME',    line: '~18M long-tail variants per year — currently manual at ~$340M' },
+      { tag: 'NUANCE',    line: 'Brand standards live at the line level (Green/Blue/Black/White/Red), not master-brand' },
+      { tag: 'CONSTRAINT',line: 'AssetHub (OpenText, 4.2 PB) must remain canonical — two prior replacements failed' },
+    ],
+  },
+
+  stakeholders: {
+    eyebrow: 'FIVE STAKEHOLDERS · ONE ROOM',
+    headline: 'Each carries a legitimate concern rooted in past experience.',
+    list: [
+      { role: 'Global CMO',                       concern: 'Wants Value Realization beyond speed. Needs to justify the enterprise investment to the board.' },
+      { role: 'VP Content Operations',            concern: 'Agile-first. Worried about standardizing before scaling and losing creative experimentation.' },
+      { role: 'Brand & Creative Standards',       concern: 'Protective of brand nuance. Fears automation means lower-quality creative.' },
+      { role: 'Head of Japanese Market',          concern: 'Tokyo cannot be a downstream filter. Local resonance is non-negotiable.' },
+      { role: 'IT / Engineering',                 concern: 'Skeptical of custom builds. Carries the institutional memory of two failed DAM replacements.' },
+    ],
+  },
+
+  solution: {
+    eyebrow: 'THE CO-INNOVATION SOLUTION',
+    headline: 'The Halcyon Variant Engine — a thin orchestration layer between AssetHub and Firefly Services.',
+    body: 'A stateless bridge that fills the product gap: it reads the canonical hero from AssetHub, resolves a brief into 188 generation tasks against a versioned brand-standards / surface-spec / locale-rules JSON library that Halcyon owns in git, fans out to Firefly primitives in parallel (Custom Models, Reframe v2, Object Composite, Translate, Photoshop API), scores every output against the line’s brand-compliance threshold, stamps approved variants with C2PA Content Credentials, and writes them back to AssetHub as child assets with full lineage. AssetHub stays canonical. The 2018 and 2022 failure modes are structurally avoided.',
+    pillars: [
+      { tag: 'AUTOMATES',  line: 'Localization + spec-compliance via a versioned spec library Halcyon owns' },
+      { tag: 'CONNECTS',   line: 'Stateless read-through bridge to AssetHub — nothing migrates, nothing duplicates' },
+      { tag: 'SCALES',     line: '188 parallel Firefly jobs per brief · ~$6.28 per variant · 4-hour brief-to-live' },
+      { tag: 'GOVERNS',    line: 'Per-line compliance threshold gate · C2PA provenance on every approved variant' },
+    ],
+  },
+
+  roadmap: {
+    eyebrow: 'THE TRANSFORMATION ROADMAP · 6 MONTHS',
+    headline: 'Three waves. 8 / 17 / 29 brands. Compounding leverage, not heroics.',
+    body: 'A defensible default — eight weighted criteria scored per brand — with one explicit override (Studio Tokyo swapped into Wave 1 to prove cultural nuance early). Each wave is structurally different work: Wave 1 is hand-tuned with FDE engineers in the room with brand directors; Wave 2 is templated through onboarding squads; Wave 3 is playbook-driven, brand-champion-led. The unit of effort per brand drops ~5× between Wave 1 and Wave 3.',
+    waves: [
+      { num: 'WAVE 1',  months: 'Months 1–2',  brands: '6 brands',  markets: 'US · UK · DE · JP',                  character: 'Hand-tuned · FDE in the room' },
+      { num: 'WAVE 2',  months: 'Months 3–4',  brands: '17 brands', markets: '+ 8 mid-tier (FR, IT, KR, AU/NZ…)', character: 'Templated · onboarding squads' },
+      { num: 'WAVE 3',  months: 'Months 5–6',  brands: '29 brands', markets: '+ 8 tail / emerging',                character: 'Playbook · brand-champion-led' },
+    ],
+    wave1Jobs: [
+      'Anchor on the proven success — pilot-brand continuity',
+      'Demonstrate commercial scale beyond the pilot — Apparel-Black ($2.8B)',
+      'Prove cultural nuance early — Studio Tokyo as Wave 1 co-author',
+      'Convert the loudest skeptic — brand standards director as platform co-author',
+    ],
+  },
+
+  value: {
+    eyebrow: 'VALUE & ROI · FIVE LENSES',
+    headline: 'Productivity is the floor. Five lenses are the proof.',
+    body: 'A defensible Year-1 ROI story for an enterprise AI transformation needs five lenses, not one. Productivity is the easy number every vendor pitch claims. It earns the program funding. The other four prove the transformation actually worked.',
+    lenses: [
+      { lens: 'SPEED',         metric: 'Brief-to-post 10 d → 3.5 d',     y1: 'Year-1 target' },
+      { lens: 'QUALITY',       metric: 'Brand compliance ≥ 95',          y1: 'Audit-grade · per line' },
+      { lens: 'REVENUE',       metric: '$85M attributable uplift',       y1: 'CFO-validated methodology' },
+      { lens: 'OPTIONALITY',   metric: '12 tier-3 markets newly viable', y1: 'Concept-to-test ≤ 14 d' },
+      { lens: 'ORG HEALTH',    metric: 'NCPS ≥ +60 sustained',           y1: 'Custom-code surface declining' },
+    ],
+    boardNumbers: [
+      { value: '$95M',  label: 'Production cost savings', sub: 'Annualized, Year-1' },
+      { value: '$85M',  label: 'Attributable revenue uplift', sub: 'Methodology peer-reviewed by CFO Month 2' },
+      { value: '3.4×',  label: 'Year-1 ROI multiple', sub: 'Savings + revenue ÷ enterprise investment' },
+      { value: '94',    label: 'Brand compliance, sustained', sub: 'Across all 52 brands at Wave 3' },
+      { value: '+6 pt', label: 'Brand consideration uplift', sub: 'In tested campaigns, pre/post' },
+    ],
+  },
+
+  ctaPrimary: 'Open the Variant Engine prototype  →',
+  ctaSecondary: 'A 7-scene live walkthrough — what the engine looks like in motion',
+};
+
 // HALCYON identity (from halcyon_brand_overview.md)
 export const BRAND = {
   wordmark: 'HALCYON',

@@ -1,5 +1,6 @@
 // app.js — boot, scene manager, mode toggle, narrate sequencer.
 
+import { renderAct0 }       from './scenes/act0.js';
 import { renderAct1 }       from './scenes/act1.js';
 import { renderScene1 }     from './scenes/scene-1-brief.js';
 import { renderScene2 }     from './scenes/scene-2-assethub.js';
@@ -16,7 +17,7 @@ import { CLOSING, NARRATE, SCENE_LABELS, SCENE_CAPTIONS, SCENE_TO_STAGE, CUES } 
 // App-level state
 // ============================================================
 const state = {
-  view: 'act1',           // 'act1' | 'scene' | 'end'
+  view: 'act0',           // 'act0' | 'act1' | 'scene' | 'end'
   scene: 0,               // 0 = none; 1..7 in Act 2
   mode: 'explore',        // 'explore' | 'narrate'
   revealedCues: new Set(),
@@ -49,6 +50,7 @@ function runSceneCleanups() {
 // ============================================================
 const $ = sel => document.querySelector(sel);
 const refs = {
+  act0:        $('#act-0'),
   act1:        $('#act-1'),
   act2:        $('#act-2'),
   endFrame:    $('#end-frame'),
@@ -72,7 +74,24 @@ function boot() {
   mountBreadcrumb(refs.breadcrumb);
   mountAct2BrandBar();
   mountMetaControls();
-  showAct1();
+  showAct0();
+}
+
+function showAct0() {
+  state.view = 'act0';
+  state.scene = 0;
+  refs.act1.classList.add('hidden');
+  refs.act2.classList.add('hidden');
+  refs.endFrame.classList.add('hidden');
+  refs.act0.classList.remove('hidden');
+  hideAllCues();
+  refs.act0.innerHTML = '';
+  renderAct0(refs.act0, { onIntoAct1: () => {
+    refs.act0.classList.add('hidden');
+    showAct1();
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }});
+  refreshMetaControls();
 }
 
 function mountAct2BrandBar() {
@@ -222,7 +241,7 @@ function mountMetaControls() {
     <button class="meta-btn" data-act="overview">↑  Overview</button>
   `;
   refs.meta.querySelector('[data-act="narrate"]').addEventListener('click', toggleNarrate);
-  refs.meta.querySelector('[data-act="overview"]').addEventListener('click', () => showAct1());
+  refs.meta.querySelector('[data-act="overview"]').addEventListener('click', () => showAct0());
 }
 
 function refreshMetaControls() {
