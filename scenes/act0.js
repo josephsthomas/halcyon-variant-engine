@@ -29,31 +29,6 @@ export function renderAct0(host, opts) {
       </div>
     </section>
 
-    <!-- Stakeholders — P12-3 click-to-reveal speech bubbles -->
-    <section class="a0-block a0-block--stakeholders">
-      <div class="a0-section-eyebrow">${escapeHtml(ACT0.stakeholders.eyebrow)}</div>
-      <h2 class="a0-section-title">${escapeHtml(ACT0.stakeholders.headline)}</h2>
-      <p class="a0-section-body" style="margin-bottom:24px">Click any seat at the table to hear their concern.</p>
-
-      <div class="a0-room" id="a0-room">
-        <div class="a0-room__table" aria-hidden="true"></div>
-        ${ACT0.stakeholders.list.map((s, i) => `
-          <button class="a0-seat" data-seat="${i}" aria-expanded="false" aria-controls="a0-bubble-${i}"
-                  aria-label="Hear concern from ${escapeHtml(s.role)}">
-            <span class="a0-seat__avatar">${escapeHtml(s.initials)}</span>
-            <span class="a0-seat__role">${escapeHtml(s.short)}</span>
-            <span class="a0-seat__hint">${escapeHtml(s.hint)}</span>
-            <span class="a0-seat__cue" aria-hidden="true">click</span>
-          </button>
-          <div id="a0-bubble-${i}" class="a0-bubble" data-bubble="${i}" role="region" aria-hidden="true">
-            <span class="a0-bubble__tail" aria-hidden="true"></span>
-            <span class="a0-bubble__attr">${escapeHtml(s.role)}  ·  ${escapeHtml(s.hint).toUpperCase()}</span>
-            <span class="a0-bubble__body">${escapeHtml(s.concern)}</span>
-          </div>
-        `).join('')}
-      </div>
-    </section>
-
     <!-- The Solution -->
     <section class="a0-block a0-block--solution">
       <div class="a0-section-eyebrow">${escapeHtml(ACT0.solution.eyebrow)}</div>
@@ -130,55 +105,13 @@ export function renderAct0(host, opts) {
   `;
 
   host.querySelector('#a0-into-act1').addEventListener('click', () => opts.onIntoAct1?.());
-
-  // Stakeholder seats — click to toggle bubble; only one open at a time
-  const seats = host.querySelectorAll('.a0-seat');
-  seats.forEach(seat => {
-    seat.addEventListener('click', () => toggleSeat(host, seat));
-    seat.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSeat(host, seat); }
-    });
-  });
-  // ESC closes any open bubble
-  host.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      const open = host.querySelector('.a0-seat.is-active');
-      if (open) {
-        toggleSeat(host, open);
-        open.focus();
-      }
-    }
-  });
-}
-
-function toggleSeat(host, seat) {
-  const idx = seat.dataset.seat;
-  const bubble = host.querySelector(`[data-bubble="${idx}"]`);
-  const isOpen = seat.getAttribute('aria-expanded') === 'true';
-
-  // Close all
-  host.querySelectorAll('.a0-seat').forEach(s => {
-    s.setAttribute('aria-expanded', 'false');
-    s.classList.remove('is-active');
-  });
-  host.querySelectorAll('.a0-bubble').forEach(b => {
-    b.classList.remove('is-visible');
-    b.setAttribute('aria-hidden', 'true');
-  });
-
-  if (!isOpen) {
-    seat.setAttribute('aria-expanded', 'true');
-    seat.classList.add('is-active');
-    bubble.classList.add('is-visible');
-    bubble.setAttribute('aria-hidden', 'false');
-  }
 }
 
 function brandStripHTML() {
   return `
     <header class="brand-strip">
       <div class="brand-strip__left">
-        <div class="brand-strip__wordmark">${escapeHtml(BRAND.wordmark)}</div>
+        <button class="brand-strip__wordmark brand-strip__wordmark--link" type="button" data-act="home" aria-label="Return to overview">${escapeHtml(BRAND.wordmark)}</button>
         <div class="brand-strip__tag">${escapeHtml(BRAND.tagline)}</div>
         <div class="brand-strip__founded">${escapeHtml(BRAND.founded)}</div>
       </div>

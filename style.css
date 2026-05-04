@@ -675,7 +675,18 @@ a { color: inherit; }
   letter-spacing: 0.30em;
   color: var(--ink-deep);
   margin-bottom: 8px;
+  display: block;
 }
+.brand-strip__wordmark--link {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  transition: color var(--dur-fast) var(--ease);
+}
+.brand-strip__wordmark--link:hover { color: var(--gold); }
+.brand-strip__wordmark--link:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
 
 .brand-strip__tag {
   font-family: var(--serif);
@@ -1165,6 +1176,15 @@ a { color: inherit; }
   letter-spacing: 0.30em;
   color: var(--ink-deep);
 }
+.act2-brand-bar__wordmark--link {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease);
+}
+.act2-brand-bar__wordmark--link:hover { color: var(--gold); }
+.act2-brand-bar__wordmark--link:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
 .act2-brand-bar__sep {
   width: 1px; height: 18px; background: var(--rule);
 }

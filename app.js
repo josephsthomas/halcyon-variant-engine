@@ -10,8 +10,7 @@ import { renderScene5 }     from './scenes/scene-5-brand-check.js';
 import { renderScene6 }     from './scenes/scene-6-contact.js';
 import { renderScene7 }     from './scenes/scene-7-activation.js';
 import { mountBreadcrumb, setActiveStage } from './breadcrumb.js';
-import { mountCueLayer, attachMarker, revealCue, hideAllCues, addToMarginLog, resetCues } from './cues.js';
-import { CLOSING, NARRATE, SCENE_LABELS, SCENE_CAPTIONS, SCENE_TO_STAGE, CUES } from './data.js';
+import { CLOSING, NARRATE, SCENE_LABELS, SCENE_CAPTIONS, SCENE_TO_STAGE } from './data.js';
 
 // ============================================================
 // App-level state
@@ -58,8 +57,6 @@ const refs = {
   sceneTitle:  $('#scene-title'),
   sceneStage:  $('#scene-stage'),
   controls:    $('#scene-controls'),
-  marginLog:   $('#margin-log'),
-  cueOverlay:  $('#cue-overlay'),
   meta:        $('#meta-controls'),
 };
 
@@ -70,7 +67,6 @@ window.__halcyonState = state;
 // Boot
 // ============================================================
 function boot() {
-  mountCueLayer(refs.cueOverlay, refs.marginLog, state);
   mountBreadcrumb(refs.breadcrumb);
   mountAct2BrandBar();
   mountMetaControls();
@@ -84,7 +80,7 @@ function showAct0() {
   refs.act2.classList.add('hidden');
   refs.endFrame.classList.add('hidden');
   refs.act0.classList.remove('hidden');
-  hideAllCues();
+
   refs.act0.innerHTML = '';
   renderAct0(refs.act0, { onIntoAct1: () => {
     refs.act0.classList.add('hidden');
@@ -101,7 +97,7 @@ function mountAct2BrandBar() {
   if (!el) return;
   el.innerHTML = `
     <div class="act2-brand-bar__left">
-      <span class="act2-brand-bar__wordmark">HALCYON</span>
+      <button class="act2-brand-bar__wordmark act2-brand-bar__wordmark--link" type="button" data-act="home" aria-label="Return to overview">HALCYON</button>
       <span class="act2-brand-bar__sep"></span>
       <span class="act2-brand-bar__active">Halcyon Apparel — Black</span>
       <span class="act2-brand-bar__campaign"><span class="dot"></span>Campaign: Spring ’26 — Quiet Strength</span>
@@ -110,9 +106,16 @@ function mountAct2BrandBar() {
       <span class="act2-brand-bar__demo">VARIANT ENGINE  ·  WALKTHROUGH</span>
     </div>
   `;
+  el.querySelector('[data-act="home"]')?.addEventListener('click', () => showAct0());
 }
 
 document.addEventListener('DOMContentLoaded', boot);
+
+// Global delegation: any [data-act="home"] click returns to Act 0
+document.addEventListener('click', (ev) => {
+  const homeBtn = ev.target.closest('[data-act="home"]');
+  if (homeBtn) showAct0();
+});
 
 // ============================================================
 // View management
@@ -125,7 +128,7 @@ function showAct1() {
   refs.endFrame.classList.add('hidden');
   refs.act1.classList.remove('hidden');
 
-  hideAllCues();
+
   refs.act1.innerHTML = '';
   renderAct1(refs.act1, { onBegin: enterAct2 });
 
@@ -148,7 +151,7 @@ function enterAct2() {
 function showScene(idx) {
   clearAllTimers();
   runSceneCleanups();
-  hideAllCues();
+
 
   // P12-1: announce scene changes to assistive tech via the aria-live title
 
@@ -161,7 +164,8 @@ function showScene(idx) {
 
   refs.sceneStage.innerHTML = '';
   const ctx = {
-    onCueAnchor: (cueId, el) => attachMarker(cueId, el),
+    // Stakeholder cue layer removed per user direction — onCueAnchor is now a no-op
+    onCueAnchor: () => {},
     addCleanup: fn => state.sceneCleanups.push(fn),
     isNarrate: () => state.mode === 'narrate',
   };
@@ -183,7 +187,7 @@ function showScene(idx) {
 function showEndFrame() {
   clearAllTimers();
   runSceneCleanups();
-  hideAllCues();
+
   state.view = 'end';
 
   refs.act2.classList.add('hidden');
@@ -293,9 +297,7 @@ function toggleNarrate() {
 // ============================================================
 function runNarrateForAct1() {
   clearAllTimers();
-  nTimeout(() => revealCue(CUES.a, true), NARRATE.act1CueA);
-  nTimeout(() => revealCue(CUES.b, true), NARRATE.act1CueB);
-  nTimeout(() => revealCue(CUES.c, true), NARRATE.act1CueC);
+  // Stakeholder cues removed — Act 1 hold is now just the timed transition.
   nTimeout(() => enterAct2(), NARRATE.act1Hold);
 }
 
@@ -305,11 +307,7 @@ function runNarrateForScene(idx) {
   if (!def) return;
   def.events.forEach(ev => {
     nTimeout(() => {
-      if (ev.type === 'cue') {
-        const cue = CUES[ev.cue];
-        if (cue) revealCue(cue, true);
-      }
-      // c2pa stamp event handled inside the scene by listening to a custom event
+      // Stakeholder cue events skipped; only c2pa stamp event remains.
       if (ev.type === 'c2pa') {
         document.dispatchEvent(new CustomEvent('halcyon:c2pa-stamp'));
       }

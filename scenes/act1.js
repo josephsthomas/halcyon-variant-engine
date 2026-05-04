@@ -1,6 +1,5 @@
 // act1.js — workflow overview page (§5) + brand identity strip + headline metrics + narrated bridge.
 import { HEADLINE, STAGES, BRAND, HEADLINE_METRICS, BRIDGE_NOTES } from '../data.js';
-import { attachMarker } from '../cues.js';
 
 export function renderAct1(host, opts) {
   host.innerHTML = `
@@ -48,14 +47,6 @@ export function renderAct1(host, opts) {
     </div>
   `;
 
-  // Wire cue anchors per §5.4
-  const specNode = host.querySelector('[data-stage-id="3"]');
-  if (specNode) attachMarker('a', specNode);
-  const bridge = host.querySelector('#a1-bridge');
-  if (bridge) attachMarker('b', bridge);
-  const fireflyNode = host.querySelector('[data-stage-id="4"]');
-  if (fireflyNode) attachMarker('c', fireflyNode);
-
   host.querySelector('#a1-begin').addEventListener('click', () => opts.onBegin?.());
 }
 
@@ -63,7 +54,7 @@ function brandStripHTML() {
   return `
     <header class="brand-strip">
       <div class="brand-strip__left">
-        <div class="brand-strip__wordmark">${escapeHtml(BRAND.wordmark)}</div>
+        <button class="brand-strip__wordmark brand-strip__wordmark--link" type="button" data-act="home" aria-label="Return to overview">${escapeHtml(BRAND.wordmark)}</button>
         <div class="brand-strip__tag">${escapeHtml(BRAND.tagline)}</div>
         <div class="brand-strip__founded">${escapeHtml(BRAND.founded)}</div>
       </div>
