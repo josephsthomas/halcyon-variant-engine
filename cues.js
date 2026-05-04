@@ -68,7 +68,13 @@ export function revealCue(cue, fromNarrate) {
 
   activeMarker = marker;
   marker.classList.add('is-active');
-  activeAnchorEl = marker;
+  // P9-5: highlight the underlying anchor element so the cue feels like a
+  // margin note on something the viewer is already looking at.
+  const anchor = marker.parentElement;
+  if (anchor) {
+    anchor.classList.add('cue-anchor--lit');
+  }
+  activeAnchorEl = anchor;
 
   // Build card
   const card = document.createElement('div');
@@ -182,6 +188,7 @@ function repositionActive() {
 
 export function hideAllCues() {
   if (activeMarker) activeMarker.classList.remove('is-active');
+  if (activeAnchorEl) activeAnchorEl.classList.remove('cue-anchor--lit');
   if (activeCard) activeCard.remove();
   if (activePointer) activePointer.remove();
   activeMarker = null;

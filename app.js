@@ -10,7 +10,7 @@ import { renderScene6 }     from './scenes/scene-6-contact.js';
 import { renderScene7 }     from './scenes/scene-7-activation.js';
 import { mountBreadcrumb, setActiveStage } from './breadcrumb.js';
 import { mountCueLayer, attachMarker, revealCue, hideAllCues, addToMarginLog, resetCues } from './cues.js';
-import { CLOSING, NARRATE, SCENE_LABELS, SCENE_TO_STAGE, CUES } from './data.js';
+import { CLOSING, NARRATE, SCENE_LABELS, SCENE_CAPTIONS, SCENE_TO_STAGE, CUES } from './data.js';
 
 // ============================================================
 // App-level state
@@ -70,8 +70,25 @@ window.__halcyonState = state;
 function boot() {
   mountCueLayer(refs.cueOverlay, refs.marginLog, state);
   mountBreadcrumb(refs.breadcrumb);
+  mountAct2BrandBar();
   mountMetaControls();
   showAct1();
+}
+
+function mountAct2BrandBar() {
+  const el = document.getElementById('act2-brand-bar');
+  if (!el) return;
+  el.innerHTML = `
+    <div class="act2-brand-bar__left">
+      <span class="act2-brand-bar__wordmark">HALCYON</span>
+      <span class="act2-brand-bar__sep"></span>
+      <span class="act2-brand-bar__active">Halcyon Apparel — Black</span>
+      <span class="act2-brand-bar__campaign"><span class="dot"></span>Campaign: Spring ’26 — Quiet Strength</span>
+    </div>
+    <div class="act2-brand-bar__right">
+      <span class="act2-brand-bar__demo">VARIANT ENGINE  ·  WALKTHROUGH</span>
+    </div>
+  `;
 }
 
 document.addEventListener('DOMContentLoaded', boot);
@@ -113,7 +130,10 @@ function showScene(idx) {
   hideAllCues();
 
   state.scene = idx;
-  refs.sceneTitle.textContent = SCENE_LABELS[idx] || '';
+  refs.sceneTitle.innerHTML = `
+    <span class="scene-title__label">${escapeHtml(SCENE_LABELS[idx] || '')}</span>
+    <span class="scene-title__caption">${escapeHtml(SCENE_CAPTIONS[idx] || '')}</span>
+  `;
   setActiveStage(SCENE_TO_STAGE[idx] || []);
 
   refs.sceneStage.innerHTML = '';

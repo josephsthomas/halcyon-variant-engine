@@ -14,9 +14,19 @@ export function renderScene6(host, ctx) {
     <div class="scene scene--contact">
       <div class="contact" style="max-width:1280px; margin:0 auto;">
         <div class="contact__hero">
+          <div class="hero-provenance">
+            <span class="hero-provenance__dot"></span>
+            <span class="hero-provenance__text">FROM ASSETHUB · CANONICAL</span>
+          </div>
           <div id="hero-tile-host"></div>
           <div class="hero-meta">
-            HERO<br/>assethub://halcyon/<br/>apparel/black/ss26/<br/>quiet-strength/<br/>hero-001.psd
+            <div class="hero-meta__label">HERO</div>
+            <div class="hero-meta__uri">assethub://halcyon/<br/>apparel/black/ss26/<br/>quiet-strength/<br/>hero-001.psd</div>
+            <div class="hero-meta__sep"></div>
+            <div class="hero-meta__bloom">
+              <div class="hero-meta__bloom-num counter-tween" id="hero-bloom-counter">0</div>
+              <div class="hero-meta__bloom-label">VARIANTS GENERATED<br/>FROM THIS HERO</div>
+            </div>
           </div>
         </div>
         <div class="contact__board">
@@ -73,11 +83,12 @@ export function renderScene6(host, ctx) {
     }, 200 + idx * tileGap);
   });
 
-  // Counter tween — to 188
+  // Counter tween — to 188 (both the contact counter and the hero bloom counter)
   const totalDur = 200 + order.length * tileGap;
   setTimeout(() => {
     if (cleanup) return;
     tweenCounter(host.querySelector('#contact-counter'), 0, 188, 18000);
+    tweenCounter(host.querySelector('#hero-bloom-counter'), 0, 188, 18000);
   }, 200);
 
   // §6.6's local "f"/"g" labels conflict with the canonical 8-cue list in §10.4

@@ -6,6 +6,7 @@ export const HEADLINE = {
   topEyebrow: 'HALCYON × ADOBE FORWARD DEPLOYED ENGINEERING · CO-INNOVATION',
   title: 'The Halcyon Variant Engine',
   subtitle: 'How one brief becomes 188 variants in four hours.',
+  hero: 'One brief.  One hero.  188 ways.',
   bridgeCaption: 'AssetHub remains the system of record. The Engine reads, orchestrates, writes back. Nothing migrates. Nothing duplicates.',
   bridgeOrchestratorLabel: 'The Variant Engine (stateless)',
   bridgeOrchestratorSub: 'Spec Library · Firefly Orchestrator · Logger',
@@ -13,7 +14,33 @@ export const HEADLINE = {
   bridgeBoxSub: '(canonical)',
   beginButton: 'Begin walkthrough  →',
   bodyOrient: 'The Engine sits between AssetHub (your DAM) and Firefly Services. AssetHub stays canonical. Firefly does the work. We orchestrate the seam.',
+  bodyOrientLong: 'A thin orchestration layer between AssetHub — Halcyon’s 4.2-petabyte OpenText DAM — and Adobe Firefly Services. A marketing director files one brief. The Engine reads the canonical hero from AssetHub, resolves the brand-standards, surface-spec, and locale-rules JSON into 188 generation tasks, fans them out across Firefly primitives in parallel, scores every output against the brand-compliance threshold, stamps approved variants with C2PA provenance, writes them back to AssetHub as child assets with full lineage, and pushes them to retail, social, OOH, and e-commerce endpoints. Brief at nine. Live at one.',
 };
+
+// HALCYON identity (from halcyon_brand_overview.md)
+export const BRAND = {
+  wordmark: 'HALCYON',
+  tagline: 'Made for the way you live.',
+  founded: 'Boulder, Colorado · est. 1968',
+  activeBrand: 'Halcyon Apparel — Black',
+  activeLine: 'Black',
+  activeRevenue: '$2.8B · the largest single sub-brand',
+  lines: [
+    { code: 'Green', promise: 'Sustainable',  hex: '#7A8F5C', isActive: false },
+    { code: 'Blue',  promise: 'Performance',  hex: '#3E5C72', isActive: false },
+    { code: 'Black', promise: 'Premium',      hex: '#1F1815', isActive: true  },
+    { code: 'White', promise: 'Essentials',   hex: '#E8E2D5', isActive: false },
+    { code: 'Red',   promise: 'Collab drops', hex: '#A8553A', isActive: false },
+  ],
+};
+
+// §7.2 — four headline numbers (the test per §13.5)
+export const HEADLINE_METRICS = [
+  { value: '$500 → $6.28', label: 'Cost per variant',     foot: 'Manual baseline → Variant Engine' },
+  { value: '6 wk → 4h 17m', label: 'Brief to live',       foot: 'Across 188 surfaces, 4 markets'    },
+  { value: '188 / 188',    label: 'Variants generated',   foot: 'One hero. Four locales. Eight surfaces.' },
+  { value: '0.96 avg',     label: 'Brand compliance',     foot: 'Threshold 0.92 · 186 of 188 passing' },
+];
 
 // §5.2 — eight pipeline nodes
 export const STAGES = [
@@ -233,6 +260,72 @@ export const SURFACES = [
   { id: 'instore',   label: 'In-store',  code: 'IN-STORE-16:9',aspectW: 16, aspectH: 9,  subjectLock: 'center', noCopy: true },
 ];
 
+// P10 — Adobe product wordmarks as inline SVGs. Recognizable but not pixel-exact:
+// the red "A" mark + product name. Used in panel chrome to ground each scene
+// in a real Adobe surface.
+export const ADOBE_LOGO_SVG = `
+  <svg class="adobe-mark" width="22" height="22" viewBox="0 0 240 234" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M167.34 0H240v234L167.34 0zM72.66 0H0v234L72.66 0zM120 86.4l46.5 147.6h-30.4l-13.9-46.5H89l45.4-69.2c-3.4-7.7-8.5-19.4-14.4-31.9z" fill="#EB1000"/>
+  </svg>
+`;
+
+export const PRODUCT_CHROME = {
+  genstudio: {
+    productName: 'GenStudio',
+    productSub:  'Performance Marketing',
+    workspace:   'Halcyon  ▾',
+    user:        'M. Chen  ●',
+    nav:         ['Campaigns', 'Briefs', 'Assets', 'Activations', 'Insights', 'Settings'],
+    activeNav:   'Briefs',
+    accent:      '#1473E6',
+  },
+  assethub: {
+    productName: 'AssetHub',
+    productSub:  'Adobe Experience Manager · OpenText',
+    workspace:   'halcyon-prod  ▾',
+    user:        'service-account-engine',
+    nav:         ['Assets', 'Collections', 'Search', 'Insights', 'Reports', 'Tools'],
+    activeNav:   'Assets',
+    accent:      '#0265DC',
+  },
+  editor: {
+    productName: 'specs/',
+    productSub:  'github.com/halcyon-internal/specs',
+    workspace:   'main · a3f4c21',
+    user:        'studio.tokyo',
+    nav:         ['EXPLORER', 'SEARCH', 'SOURCE CONTROL', 'EXTENSIONS'],
+    activeNav:   'EXPLORER',
+    accent:      '#007ACC',
+  },
+  firefly: {
+    productName: 'Firefly Services',
+    productSub:  'Job Console · Variant Engine',
+    workspace:   'halcyon-prod  ▾',
+    user:        'service-account-engine',
+    nav:         ['Jobs', 'Models', 'Datasets', 'Webhooks', 'Logs', 'Quotas'],
+    activeNav:   'Jobs',
+    accent:      '#D7373F',
+  },
+  brandcheck: {
+    productName: 'GenStudio',
+    productSub:  'Brand Check · MLR Hooks',
+    workspace:   'Halcyon  ▾',
+    user:        'M. Chen  ●',
+    nav:         ['Campaigns', 'Briefs', 'Assets', 'Activations', 'Insights', 'Settings'],
+    activeNav:   'Assets',
+    accent:      '#1473E6',
+  },
+  activation: {
+    productName: 'GenStudio',
+    productSub:  'Channel Activation',
+    workspace:   'Halcyon  ▾',
+    user:        'M. Chen  ●',
+    nav:         ['Campaigns', 'Briefs', 'Assets', 'Activations', 'Insights', 'Settings'],
+    activeNav:   'Activations',
+    accent:      '#1473E6',
+  },
+};
+
 // Unsplash photo bank — dark editorial apparel imagery, indexed per market.
 // Each entry is an Unsplash photo ID; loaded from images.unsplash.com CDN with
 // per-surface crop params at request time. Per-market chosen so the locales
@@ -338,10 +431,30 @@ export const SCENE_LABELS = [
   'Scene 2 — AssetHub Lookup',
   'Scene 3 — The Spec Library',
   'Scene 4 — Firefly Generation',
-  'Scene 5 — Brand Check',
+  'Scene 5 — Brand Check & Provenance',
   'Scene 6 — The Contact Sheet',
   'Scene 7 — Activation',
 ];
+
+// P9-4: per-scene "what just happened" captions in italic display serif.
+// Tells the viewer in plain language what they're watching and why it matters.
+export const SCENE_CAPTIONS = [
+  null,
+  'A marketing director files one structured brief. The Engine resolves it into 188 generation tasks before they finish typing.',
+  'The Engine reads the canonical hero from AssetHub. Stateless. Read-through. AssetHub stays canonical — the 2018 migration and 2022 rebuild failure modes are structurally avoided.',
+  'The brand standards, surface specs, and locale rules live as versioned JSON in Halcyon’s git. Tokyo co-authors the locale layer. Adobe never owns the standards.',
+  'One hero asset fans out across 188 parallel Firefly jobs. Custom Models per line. Reframe v2 per surface. Translate per market. The volume becomes visceral.',
+  'Every variant scored against the line’s brand-compliance threshold. Two of 188 below floor → human review. Each approved variant stamped with C2PA provenance.',
+  'The bloom. One brief. Four markets. Eight surfaces. 188 brand-compliant, locale-aware variants — visibly distinct where they should be.',
+  'Live across 188 surfaces in four hours. Brief filed at nine. Live at one. The unit economics of the long tail flip from $500/variant to $6.28.',
+];
+
+// P9-3 bridge — failure-mode footnotes shown next to the diagram
+export const BRIDGE_NOTES = {
+  story2018: '2018 — vendor DAM replacement. Migration broke rights metadata. $14M abandoned.',
+  story2022: '2022 — internal rebuild. Couldn’t handle the line-architecture without infinite customization. 18 months lost.',
+  resolution: 'AssetHub stays. The Engine is stateless. Neither failure mode is reachable from this architecture.',
+};
 
 // Which pipeline stage is "active" for each scene (1-indexed)
 export const SCENE_TO_STAGE = {
