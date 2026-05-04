@@ -229,3 +229,10 @@ document.addEventListener('click', (ev) => {
   hideAllCues();
 });
 
+// P12-1 — ESC closes any active cue (a11y keyboard escape)
+document.addEventListener('keydown', (ev) => {
+  if (ev.key === 'Escape' && activeCard) {
+    hideAllCues();
+  }
+});
+

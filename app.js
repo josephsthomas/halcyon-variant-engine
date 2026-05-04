@@ -90,8 +90,10 @@ function showAct0() {
     refs.act0.classList.add('hidden');
     showAct1();
     window.scrollTo({ top: 0, behavior: 'instant' });
+    refs.act1.focus({ preventScroll: true });
   }});
   refreshMetaControls();
+  refs.act0.focus({ preventScroll: true });
 }
 
 function mountAct2BrandBar() {
@@ -147,6 +149,8 @@ function showScene(idx) {
   clearAllTimers();
   runSceneCleanups();
   hideAllCues();
+
+  // P12-1: announce scene changes to assistive tech via the aria-live title
 
   state.scene = idx;
   refs.sceneTitle.innerHTML = `
@@ -219,8 +223,10 @@ function renderSceneControls() {
   const prevDisabled = state.scene <= 1;
   const isLast = state.scene >= 7;
   refs.controls.innerHTML = `
-    <button class="ctrl" data-act="prev" ${prevDisabled?'disabled':''}>◂  Previous</button>
-    <button class="ctrl ctrl--primary" data-act="next">${isLast ? 'Show closer' : 'Next  ▸'}</button>
+    <button class="ctrl" data-act="prev" ${prevDisabled?'disabled':''}
+            aria-label="Previous scene${prevDisabled ? ' (disabled at first scene)' : ''}">◂  Previous</button>
+    <button class="ctrl ctrl--primary" data-act="next"
+            aria-label="${isLast ? 'Show closing summary' : 'Next scene'}">${isLast ? 'Show closer' : 'Next  ▸'}</button>
   `;
   refs.controls.querySelector('[data-act="prev"]').addEventListener('click', () => {
     if (state.scene > 1) showScene(state.scene - 1);
@@ -236,9 +242,9 @@ function renderSceneControls() {
 // ============================================================
 function mountMetaControls() {
   refs.meta.innerHTML = `
-    <button class="meta-btn" data-act="narrate">▶  Narrate</button>
-    <span class="meta-divider"></span>
-    <button class="meta-btn" data-act="overview">↑  Overview</button>
+    <button class="meta-btn" data-act="narrate" aria-label="Toggle narrate mode (auto-play)">▶  Narrate</button>
+    <span class="meta-divider" aria-hidden="true"></span>
+    <button class="meta-btn" data-act="overview" aria-label="Return to case study overview">↑  Overview</button>
   `;
   refs.meta.querySelector('[data-act="narrate"]').addEventListener('click', toggleNarrate);
   refs.meta.querySelector('[data-act="overview"]').addEventListener('click', () => showAct0());

@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=1440" />
-<title>The Halcyon Variant Engine</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="The Halcyon Variant Engine — a Forward Deployed Engineering case study prototype showing how one brief becomes 188 brand-compliant, locale-aware variants in four hours.">
+<meta name="theme-color" content="#1F3A34">
+<title>From Pilot to Transformation · The Halcyon Variant Engine</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,30 +16,39 @@
 </head>
 <body>
 
-<!-- Act 0 — Challenge + Solution overview (pre-page) -->
-<section id="act-0" class="act act--0" aria-label="Case study overview"></section>
+<a href="#main-content" class="skip-link">Skip to main content</a>
 
-<!-- Act 1 — Workflow Overview Page -->
-<section id="act-1" class="act act--1 hidden" aria-label="Workflow overview"></section>
+<main id="main-content">
+  <!-- Act 0 — Challenge + Solution overview (pre-page) -->
+  <section id="act-0" class="act act--0" aria-labelledby="a0-main-title" tabindex="-1"></section>
 
-<!-- Act 2 — Visual Walkthrough -->
-<section id="act-2" class="act act--2 hidden" aria-label="Visual walkthrough">
-  <header id="act2-brand-bar" class="act2-brand-bar"></header>
-  <header id="breadcrumb-host" class="breadcrumb-host"></header>
-  <h2 id="scene-title" class="scene-title"></h2>
-  <main id="scene-stage" class="scene-stage"></main>
-  <footer id="scene-controls" class="scene-controls"></footer>
-  <aside id="margin-log" class="margin-log" aria-label="Margin log"></aside>
-</section>
+  <!-- Act 1 — Workflow Overview Page -->
+  <section id="act-1" class="act act--1 hidden" aria-label="Variant Engine workflow overview" tabindex="-1"></section>
 
-<!-- End frame -->
-<section id="end-frame" class="end-frame hidden" aria-label="Closing frame"></section>
+  <!-- Act 2 — Visual Walkthrough -->
+  <section id="act-2" class="act act--2 hidden" aria-label="Variant Engine visual walkthrough" tabindex="-1">
+    <div id="act2-brand-bar" class="act2-brand-bar" role="banner"></div>
+    <nav id="breadcrumb-host" class="breadcrumb-host" aria-label="Pipeline progress"></nav>
+    <h2 id="scene-title" class="scene-title" aria-live="polite"></h2>
+    <div id="scene-stage" class="scene-stage" role="region" aria-label="Active scene"></div>
+    <div id="scene-controls" class="scene-controls" role="group" aria-label="Scene navigation"></div>
+    <aside id="margin-log" class="margin-log" aria-label="Audience cues seen so far" aria-live="polite"></aside>
+  </section>
+
+  <!-- End frame -->
+  <section id="end-frame" class="end-frame hidden" aria-label="Closing summary" tabindex="-1"></section>
+</main>
 
 <!-- Floating cue overlay (markers anchor to elements; this hosts cards + pointers) -->
 <div id="cue-overlay" class="cue-overlay" aria-live="polite"></div>
 
 <!-- Mode + meta controls (always visible chrome — minimal) -->
 <nav id="meta-controls" class="meta-controls" aria-label="Playback"></nav>
+
+<!-- Persistent disclaimer footer -->
+<footer class="site-footer" role="contentinfo">
+  For Internal Hiring Purposes Only  |  Not An Actual Company  |  All Rights Reserved Joe Thomas via Conexus Executive Recruiting
+</footer>
 
 <script type="module" src="./app.js"></script>
 </body>

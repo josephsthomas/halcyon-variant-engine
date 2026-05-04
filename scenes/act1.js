@@ -73,9 +73,10 @@ function brandStripHTML() {
         <div class="brand-strip__active-foot">${escapeHtml(BRAND.activeRevenue)}</div>
         <div class="brand-strip__lines">
           ${BRAND.lines.map(l => `
-            <div class="brand-line ${l.isActive ? 'is-active' : ''}" title="${escapeHtml(l.code)} — ${escapeHtml(l.promise)}">
-              <span class="brand-line__swatch" style="background:${l.hex}"></span>
+            <div class="brand-line ${l.isActive ? 'is-active' : ''} ${l.isPilot ? 'is-pilot' : ''}" title="${escapeHtml(l.code)} — ${escapeHtml(l.promise)}${l.badge ? ' (' + l.badge + ')' : ''}">
+              <span class="brand-line__swatch" style="background:${l.hex}" aria-hidden="true"></span>
               <span class="brand-line__code">${escapeHtml(l.code)}</span>
+              ${l.badge ? `<span class="brand-line__badge">${escapeHtml(l.badge)}</span>` : ''}
             </div>
           `).join('')}
         </div>

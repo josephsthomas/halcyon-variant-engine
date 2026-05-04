@@ -37,13 +37,16 @@ export function buildTile({ market, surface, flagged, hero }) {
   if (flagged) wrap.classList.add('is-flagged');
   if (surface.amazonLight) wrap.dataset.amazon = '1';
 
+  const altText = `${surface.code} variant for ${market} (${locale.lang}) — ${locale.headline}`;
+  wrap.setAttribute('role', 'img');
+  wrap.setAttribute('aria-label', altText);
   wrap.innerHTML = `
     <div class="tile__canvas" style="aspect-ratio: ${aspect};">
-      <div class="tile__photo" style="background-image: url('${photoURL}');"></div>
-      <div class="tile__scrim"></div>
+      <div class="tile__photo" style="background-image: url('${photoURL}');" aria-hidden="true"></div>
+      <div class="tile__scrim" aria-hidden="true"></div>
       ${typographyHTML({ surface, locale })}
-      ${locale.disclaimer ? `<div class="tile__disclaimer">${escapeHtml(locale.disclaimer)}</div>` : ''}
-      ${locale.kana && !surface.noCopy ? `<div class="tile__kana">${escapeHtml(locale.kana)}</div>` : ''}
+      ${locale.disclaimer ? `<div class="tile__disclaimer" aria-hidden="true">${escapeHtml(locale.disclaimer)}</div>` : ''}
+      ${locale.kana && !surface.noCopy ? `<div class="tile__kana" aria-hidden="true">${escapeHtml(locale.kana)}</div>` : ''}
     </div>
     <div class="tile__caption">${escapeHtml(surface.code)} · ${escapeHtml(market)} · ${escapeHtml(locale.lang)}</div>
   `;
@@ -73,8 +76,10 @@ export function buildBrandCheckTile({ market, surface, score, flagged }) {
   const wrap = document.createElement('div');
   wrap.className = 'bc-tile';
   if (flagged) wrap.classList.add('is-flagged');
+  wrap.setAttribute('role', 'img');
+  wrap.setAttribute('aria-label', `Variant compliance score ${score}${flagged ? ', flagged for review' : ''}`);
   wrap.innerHTML = `
-    <div class="bc-tile__photo" style="background-image: url('${photoURL}');"></div>
+    <div class="bc-tile__photo" style="background-image: url('${photoURL}');" aria-hidden="true"></div>
     <span class="bc-tile__score">${escapeHtml(score)}</span>
   `;
   return wrap;

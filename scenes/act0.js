@@ -8,7 +8,7 @@ export function renderAct0(host, opts) {
     ${brandStripHTML()}
 
     <div class="a0-eyebrow">${escapeHtml(ACT0.eyebrow)}</div>
-    <h1 class="a0-title">${escapeHtml(ACT0.title)}</h1>
+    <h1 id="a0-main-title" class="a0-title">${escapeHtml(ACT0.title)}</h1>
     <p class="a0-subtitle">${escapeHtml(ACT0.subtitle)}</p>
 
     <!-- The Challenge -->
@@ -16,6 +16,9 @@ export function renderAct0(host, opts) {
       <div class="a0-section-eyebrow">${escapeHtml(ACT0.challenge.eyebrow)}</div>
       <h2 class="a0-section-title">${escapeHtml(ACT0.challenge.headline)}</h2>
       <p class="a0-section-body">${escapeHtml(ACT0.challenge.body)}</p>
+      <div class="a0-lineage">
+        <span class="a0-lineage__bullet">●</span>${escapeHtml(ACT0.challenge.lineage)}
+      </div>
       <div class="a0-pillars">
         ${ACT0.challenge.pillars.map(p => `
           <div class="a0-pillar">
@@ -26,15 +29,26 @@ export function renderAct0(host, opts) {
       </div>
     </section>
 
-    <!-- Stakeholders -->
-    <section class="a0-block">
+    <!-- Stakeholders — P12-3 click-to-reveal speech bubbles -->
+    <section class="a0-block a0-block--stakeholders">
       <div class="a0-section-eyebrow">${escapeHtml(ACT0.stakeholders.eyebrow)}</div>
       <h2 class="a0-section-title">${escapeHtml(ACT0.stakeholders.headline)}</h2>
-      <div class="a0-stakeholders">
-        ${ACT0.stakeholders.list.map(s => `
-          <div class="a0-stake">
-            <div class="a0-stake__role">${escapeHtml(s.role)}</div>
-            <div class="a0-stake__concern">${escapeHtml(s.concern)}</div>
+      <p class="a0-section-body" style="margin-bottom:24px">Click any seat at the table to hear their concern.</p>
+
+      <div class="a0-room" id="a0-room">
+        <div class="a0-room__table" aria-hidden="true"></div>
+        ${ACT0.stakeholders.list.map((s, i) => `
+          <button class="a0-seat" data-seat="${i}" aria-expanded="false" aria-controls="a0-bubble-${i}"
+                  aria-label="Hear concern from ${escapeHtml(s.role)}">
+            <span class="a0-seat__avatar">${escapeHtml(s.initials)}</span>
+            <span class="a0-seat__role">${escapeHtml(s.short)}</span>
+            <span class="a0-seat__hint">${escapeHtml(s.hint)}</span>
+            <span class="a0-seat__cue" aria-hidden="true">click</span>
+          </button>
+          <div id="a0-bubble-${i}" class="a0-bubble" data-bubble="${i}" role="region" aria-hidden="true">
+            <span class="a0-bubble__tail" aria-hidden="true"></span>
+            <span class="a0-bubble__attr">${escapeHtml(s.role)}  ·  ${escapeHtml(s.hint).toUpperCase()}</span>
+            <span class="a0-bubble__body">${escapeHtml(s.concern)}</span>
           </div>
         `).join('')}
       </div>
@@ -116,6 +130,48 @@ export function renderAct0(host, opts) {
   `;
 
   host.querySelector('#a0-into-act1').addEventListener('click', () => opts.onIntoAct1?.());
+
+  // Stakeholder seats — click to toggle bubble; only one open at a time
+  const seats = host.querySelectorAll('.a0-seat');
+  seats.forEach(seat => {
+    seat.addEventListener('click', () => toggleSeat(host, seat));
+    seat.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSeat(host, seat); }
+    });
+  });
+  // ESC closes any open bubble
+  host.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const open = host.querySelector('.a0-seat.is-active');
+      if (open) {
+        toggleSeat(host, open);
+        open.focus();
+      }
+    }
+  });
+}
+
+function toggleSeat(host, seat) {
+  const idx = seat.dataset.seat;
+  const bubble = host.querySelector(`[data-bubble="${idx}"]`);
+  const isOpen = seat.getAttribute('aria-expanded') === 'true';
+
+  // Close all
+  host.querySelectorAll('.a0-seat').forEach(s => {
+    s.setAttribute('aria-expanded', 'false');
+    s.classList.remove('is-active');
+  });
+  host.querySelectorAll('.a0-bubble').forEach(b => {
+    b.classList.remove('is-visible');
+    b.setAttribute('aria-hidden', 'true');
+  });
+
+  if (!isOpen) {
+    seat.setAttribute('aria-expanded', 'true');
+    seat.classList.add('is-active');
+    bubble.classList.add('is-visible');
+    bubble.setAttribute('aria-hidden', 'false');
+  }
 }
 
 function brandStripHTML() {
@@ -132,9 +188,10 @@ function brandStripHTML() {
         <div class="brand-strip__active-foot">${escapeHtml(BRAND.activeRevenue)}</div>
         <div class="brand-strip__lines">
           ${BRAND.lines.map(l => `
-            <div class="brand-line ${l.isActive ? 'is-active' : ''}" title="${escapeHtml(l.code)} — ${escapeHtml(l.promise)}">
-              <span class="brand-line__swatch" style="background:${l.hex}"></span>
+            <div class="brand-line ${l.isActive ? 'is-active' : ''} ${l.isPilot ? 'is-pilot' : ''}" title="${escapeHtml(l.code)} — ${escapeHtml(l.promise)}${l.badge ? ' (' + l.badge + ')' : ''}">
+              <span class="brand-line__swatch" style="background:${l.hex}" aria-hidden="true"></span>
               <span class="brand-line__code">${escapeHtml(l.code)}</span>
+              ${l.badge ? `<span class="brand-line__badge">${escapeHtml(l.badge)}</span>` : ''}
             </div>
           `).join('')}
         </div>

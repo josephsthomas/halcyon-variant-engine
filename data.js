@@ -28,6 +28,7 @@ export const ACT0 = {
     eyebrow: 'THE CHALLENGE',
     headline: 'A pilot worked. The scale-out doesn’t fit any existing product.',
     body: 'Six months ago Halcyon ran a Firefly Services pilot on one brand in one market — Apparel-Green in North America. The pilot cut brief-to-post cycle time by 60% and lifted brand-compliance scores from 78 to 94. The CMO has now asked for transformation across 52 sub-brands and 20 markets. Discovery surfaced where the pilot’s success doesn’t generalize: hero imagery is fast, but the long tail — 500+ localized e-commerce, OOH, and retail variants per campaign, an estimated 18 million variants per year — remains a manual, $340M/year process. Standard Adobe products do not have a one-click localization-and-spec-compliance engine that connects to a 4.2-petabyte legacy OpenText DAM that two prior replacement attempts (2018, 2022) failed to migrate.',
+    lineage: 'Pilot proven on Apparel-Green NA · This demo scales to Apparel-Black, the largest single sub-brand at $2.8B — the first commercial test of the engine beyond the pilot.',
     pillars: [
       { tag: 'SCALE',     line: '52 sub-brands × 20 markets × 500+ surface specs per campaign' },
       { tag: 'VOLUME',    line: '~18M long-tail variants per year — currently manual at ~$340M' },
@@ -40,11 +41,11 @@ export const ACT0 = {
     eyebrow: 'FIVE STAKEHOLDERS · ONE ROOM',
     headline: 'Each carries a legitimate concern rooted in past experience.',
     list: [
-      { role: 'Global CMO',                       concern: 'Wants Value Realization beyond speed. Needs to justify the enterprise investment to the board.' },
-      { role: 'VP Content Operations',            concern: 'Agile-first. Worried about standardizing before scaling and losing creative experimentation.' },
-      { role: 'Brand & Creative Standards',       concern: 'Protective of brand nuance. Fears automation means lower-quality creative.' },
-      { role: 'Head of Japanese Market',          concern: 'Tokyo cannot be a downstream filter. Local resonance is non-negotiable.' },
-      { role: 'IT / Engineering',                 concern: 'Skeptical of custom builds. Carries the institutional memory of two failed DAM replacements.' },
+      { role: 'Global CMO',                  short: 'CMO',         initials: 'C',  hint: 'Sponsor',     concern: 'Wants Value Realization beyond speed. Needs to justify the enterprise investment to the board.' },
+      { role: 'VP Content Operations',       short: 'VP Ops',      initials: 'V',  hint: 'Velocity',    concern: 'Agile-first. Worried about standardizing before scaling and losing creative experimentation.' },
+      { role: 'Brand & Creative Standards',  short: 'Brand Dir.',  initials: 'B',  hint: 'Standards',   concern: 'Protective of brand nuance. Fears automation means lower-quality creative.' },
+      { role: 'Head of Japanese Market',     short: 'Japan Lead',  initials: 'J',  hint: 'Resonance',   concern: 'Tokyo cannot be a downstream filter. Local resonance is non-negotiable.' },
+      { role: 'IT / Engineering',            short: 'IT / Eng.',   initials: 'IT', hint: 'Integration', concern: 'Skeptical of custom builds. Carries the institutional memory of two failed DAM replacements.' },
     ],
   },
 
@@ -110,11 +111,11 @@ export const BRAND = {
   activeLine: 'Black',
   activeRevenue: '$2.8B · the largest single sub-brand',
   lines: [
-    { code: 'Green', promise: 'Sustainable',  hex: '#7A8F5C', isActive: false },
-    { code: 'Blue',  promise: 'Performance',  hex: '#3E5C72', isActive: false },
-    { code: 'Black', promise: 'Premium',      hex: '#1F1815', isActive: true  },
-    { code: 'White', promise: 'Essentials',   hex: '#E8E2D5', isActive: false },
-    { code: 'Red',   promise: 'Collab drops', hex: '#A8553A', isActive: false },
+    { code: 'Green', promise: 'Sustainable',  hex: '#7A8F5C', isPilot: true,  badge: 'PILOT' },
+    { code: 'Blue',  promise: 'Performance',  hex: '#3E5C72' },
+    { code: 'Black', promise: 'Premium',      hex: '#1F1815', isActive: true, badge: 'THIS DEMO' },
+    { code: 'White', promise: 'Essentials',   hex: '#E8E2D5' },
+    { code: 'Red',   promise: 'Collab drops', hex: '#A8553A' },
   ],
 };
 
