@@ -233,6 +233,47 @@ export const SURFACES = [
   { id: 'instore',   label: 'In-store',  code: 'IN-STORE-16:9',aspectW: 16, aspectH: 9,  subjectLock: 'center', noCopy: true },
 ];
 
+// Unsplash photo bank — dark editorial apparel imagery, indexed per market.
+// Each entry is an Unsplash photo ID; loaded from images.unsplash.com CDN with
+// per-surface crop params at request time. Per-market chosen so the locales
+// read distinct in the contact sheet.
+export const UNSPLASH = {
+  // Dark / charcoal apparel, editorial 3/4 pose where possible
+  US: [
+    '1539109136881-3be0616acf4b',
+    '1488161628813-04466f872be2',
+    '1490481651871-ab68de25d43d',
+    '1517630800677-932d836ab680',
+  ],
+  UK: [
+    '1521572163474-6864f9cf17ab',
+    '1507003211169-0a1dd7228f2d',
+    '1551836022-d5d88e9218df',
+    '1503342217505-b0a15ec3261c',
+  ],
+  DE: [
+    '1483985988355-763728e1935b',
+    '1516257984-b1b4d707412e',
+    '1559563458-527698bf5295',
+    '1536243298747-ea8874136d64',
+  ],
+  // JP — slightly different cast: tighter portraits, warmer tones
+  JP: [
+    '1492288991661-058aa541ff43',
+    '1469334031218-e382a71b716b',
+    '1485043163111-b6cd47fece3a',
+    '1543610892-0b1f7e6d8ac1',
+  ],
+  // Hero on the contact sheet (master 2:3)
+  HERO: '1539109136881-3be0616acf4b',
+};
+
+export function unsplashURL(id, w, h) {
+  const cw = Math.max(200, Math.min(1600, Math.round(w)));
+  const ch = Math.max(200, Math.min(1600, Math.round(h)));
+  return `https://images.unsplash.com/photo-${id}?w=${cw}&h=${ch}&fit=crop&crop=faces,entropy&auto=format&q=70`;
+}
+
 // §7.3 — copy lines per locale
 export const LOCALES = {
   US: { code: 'US', lang: 'en',    headline: 'Quiet Strength',  cta: 'Shop SS26',            detail: 'Tailored for the way you live.',         eyebrow: 'HALCYON APPAREL — BLACK', font: 'serif', kana: null,                                            disclaimer: null },
